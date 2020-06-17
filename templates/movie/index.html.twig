@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Movie List!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+<div id="showdata">
+<h1>Movie List
+<a class="btn btn-primary" href="/web/movie/new">New</a>
+</h1>
+<hr/>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Count</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    {% for movie in movies %}
+    <tr>
+      <th scope="row">{{ movie.id }}</th>
+      <td>{{ movie.title }}</td>
+      <td>{{ movie.count }}</td>
+      <td>
+        <a class="btn btn-danger" href="/web/movie/edit/{{ movie.id }}" >Edit</a>
+        <a class="btn btn-danger" href="/web/movie/delete/{{ movie.id }}" onclick="return confirm('Are you sure?');">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+</div>
+</div>
+
+<script >
+$(function () {
+
+//$('#showdata').load('show-data.php');
+
+$('#dataform').validator();
+
+
+// when the form is submitted
+$('#dataform').on('submit', function (e) {
+
+    // if the validator does not prevent form submit
+    if (!e.isDefaultPrevented()) {
+        var url = "server.php";
+
+        // POST values in the background the the script URL
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $(this).serialize(),
+            success: function (data)
+            {
+              $('#showdata').load('show-data.php');
+              $('#messages').html(data);
+              $('#dataform').get(0).reset();
+            }
+        });
+        return false;
+    }
+})
+});
+</script>
+{% endblock %}

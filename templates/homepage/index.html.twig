@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+
+{% block body %}
+        <div class="container">
+
+
+<div id="showdata">
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    {% for movie in movies %}
+    <tr>
+      <th scope="row">{{ movie.id }}</th>
+      <td>{{ movie.title }}</td>
+      <td>{{ movie.count }}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+</div>
+</div>
+
+<script >
+$(function () {
+
+//$('#showdata').load('show-data.php');
+
+$('#dataform').validator();
+
+
+// when the form is submitted
+$('#dataform').on('submit', function (e) {
+
+    // if the validator does not prevent form submit
+    if (!e.isDefaultPrevented()) {
+        var url = "server.php";
+
+        // POST values in the background the the script URL
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $(this).serialize(),
+            success: function (data)
+            {
+              $('#showdata').load('show-data.php');
+              $('#messages').html(data);
+              $('#dataform').get(0).reset();
+            }
+        });
+        return false;
+    }
+})
+});        
+</script>
+
+{% endblock %}

@@ -5,7 +5,7 @@ This is an simple applicaiotn using symfony veriosn 5. This application inclues 
 Clone git repo
 
 ```
-https://github.com/anwarhossainam2020/symfony5-movie-collection.git
+git clone https://github.com/anwarhossainam2020/symfony5-movie-collection.git
 ```
 
 Install dependencies:
